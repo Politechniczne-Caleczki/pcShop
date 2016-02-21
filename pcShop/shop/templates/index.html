@@ -1,0 +1,61 @@
+<html>
+    <head>
+      <title>Sklep Komputerowy</title>    
+      <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">  
+      <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">        
+       <script type="text/javascript">
+        
+           function addOrUpdateUrlParam(name, value) {
+               var href = window.location.href;
+               var regex = new RegExp("[&\\?]" + name + "=");
+               if (regex.test(href)) {
+                   regex = new RegExp("([&\\?])" + name + "=\\d+");
+                   window.location.href = href.replace(regex, "$1" + name + "=" + value);
+               }
+               else {
+                   if (href.indexOf("?") > -1)
+                       window.location.href = href + "&" + name + "=" + value;
+                   else
+                       window.location.href = href + "?" + name + "=" + value;
+               }
+           }
+
+       </script>
+    </head>
+    <body>
+        <table align="center">
+            <tbody>
+                <tr> 
+                    <td>
+                        {% include "mainMenu.html" %}       
+                    </td>                   
+                </tr>
+                <tr>
+                    <td>
+                        {% include "userMenu.html" %}
+                    </td>
+                </tr>
+                {% if error_list %}
+                    <tr>
+                        <td>
+                            {% include "error.html" %}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td>   
+                        {% autoescape off %}                   
+                            {{ content }}
+                        {% endautoescape %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        {% include "stopka.html" %} 
+                    </td>
+                </tr>
+            </tbody>              
+        </table>
+    </body>
+</html>

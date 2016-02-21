@@ -1,0 +1,9 @@
+﻿{% if error_list %}
+        <ul>
+            {% for error in error_list %} 
+            <li>
+               {{ error }}
+            </li>     
+            {% endfor %}
+        </ul>
+{% endif %}

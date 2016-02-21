@@ -1,0 +1,13 @@
+﻿{% if completed_list %}
+    <table align="center">
+        <tbody>
+                {% for completed in completed_list%}
+                    <tr>
+                        <td>
+                            <a href="/shop/completed/{{ completed.id }}/">{{completed}}</a><br />
+                        </td>
+                    </tr>
+                {% endfor %}
+        </tbody>
+    </table>        
+{% endif %}

@@ -1,0 +1,37 @@
+﻿{% if order_list %}
+    <form action="/shop/buy/" method="post">
+        {% csrf_token %}
+        <table align="center" style="border: 1px solid black;">
+            {% for order in order_list %}
+                <tr>
+                    <td>
+                        {{ order }}
+                    </td>
+                    <td>
+                         <input type="checkbox" value={{ order.id}} name="Orders" />
+                    </td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td>
+                        <p>Delivery address</p>
+                        <select name="ShippingInformation">                            
+                            {% for shinf in shinf_list%}                
+                                <option value={{ shinf.id }}> {{ shinf }} </option>                                   
+                            {% endfor %}
+                        </select> 
+
+                    
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" name="button" value="Buy" />                                           
+                        <input type="submit" name="button" value="Delete" />
+                    </td>
+                </tr>
+        </table>           
+    </form>     
+{% else %}
+        <p> No items.</p>
+{% endif %}

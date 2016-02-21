@@ -1,0 +1,20 @@
+﻿{% if bought_list %}
+<table align="center">
+    <tbody>
+    {% for bought in bought_list %}
+        <tr>
+            <td>
+                <a href="/shop/bought/{{ bought.id }}/">{{bought}}</a><br />
+            </td>
+            <td>
+                <form action="/shop/bought/" method="post">
+                    {% csrf_token %}
+                    <input name="Bought" value={{ bought.id }} type="hidden">
+                    <input type="submit" value="Delete"  />
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}

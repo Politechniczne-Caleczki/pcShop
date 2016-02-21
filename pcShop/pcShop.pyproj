@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <Name>pcShop</Name>
+    <RootNamespace>pcShop</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>c5f4f805-f4ad-497b-a7f4-d7ad4017f48d</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <LaunchProvider>Django launcher</LaunchProvider>
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="manage.py" />
+    <Compile Include="pcShop\views.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="pcShop\__init__.py" />
+    <Compile Include="pcShop\settings.py" />
+    <Compile Include="pcShop\urls.py" />
+    <Compile Include="pcShop\wsgi.py" />
+    <Compile Include="shop\admin.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="shop\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="shop\models.py" />
+    <Compile Include="shop\tests.py" />
+    <Compile Include="shop\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="shop\views.py" />
+    <Compile Include="shop\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="static\" />
+    <Folder Include="static\admin\" />
+    <Folder Include="static\admin\css\" />
+    <Folder Include="static\admin\fonts\" />
+    <Folder Include="static\admin\img\" />
+    <Folder Include="static\admin\img\gis\" />
+    <Folder Include="static\admin\js\" />
+    <Folder Include="static\admin\js\admin\" />
+    <Folder Include="static\admin\js\vendor\" />
+    <Folder Include="static\admin\js\vendor\jquery\" />
+    <Folder Include="static\admin\js\vendor\xregexp\" />
+    <Folder Include="static\js\" />
+    <Folder Include="templates\" />
+    <Folder Include="pcShop\" />
+    <Folder Include="shop\" />
+    <Folder Include="shop\templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="shop\templates\active.html" />
+    <Content Include="shop\templates\basket.html" />
+    <Content Include="shop\templates\bought.html" />
+    <Content Include="shop\templates\boughtList.html" />
+    <Content Include="shop\templates\completed.html" />
+    <Content Include="shop\templates\completedList.html" />
+    <Content Include="shop\templates\error.html" />
+    <Content Include="shop\templates\mainMenu.html" />
+    <Content Include="shop\templates\options.html" />
+    <Content Include="shop\templates\productList.html" />
+    <Content Include="shop\templates\stopka.html" />
+    <Content Include="shop\templates\userMenu.html" />
+    <Content Include="static\admin\css\base.css" />
+    <Content Include="static\admin\css\changelists.css" />
+    <Content Include="static\admin\css\dashboard.css" />
+    <Content Include="static\admin\css\fonts.css" />
+    <Content Include="static\admin\css\forms.css" />
+    <Content Include="static\admin\css\login.css" />
+    <Content Include="static\admin\css\rtl.css" />
+    <Content Include="static\admin\css\widgets.css" />
+    <Content Include="static\admin\fonts\LICENSE.txt" />
+    <Content Include="static\admin\fonts\README.txt" />
+    <Content Include="static\admin\fonts\Roboto-Bold-webfont.woff" />
+    <Content Include="static\admin\fonts\Roboto-Light-webfont.woff" />
+    <Content Include="static\admin\fonts\Roboto-Regular-webfont.woff" />
+    <Content Include="static\admin\img\calendar-icons.svg" />
+    <Content Include="static\admin\img\gis\move_vertex_off.svg" />
+    <Content Include="static\admin\img\gis\move_vertex_on.svg" />
+    <Content Include="static\admin\img\icon-addlink.svg" />
+    <Content Include="static\admin\img\icon-alert.svg" />
+    <Content Include="static\admin\img\icon-calendar.svg" />
+    <Content Include="static\admin\img\icon-changelink.svg" />
+    <Content Include="static\admin\img\icon-clock.svg" />
+    <Content Include="static\admin\img\icon-deletelink.svg" />
+    <Content Include="static\admin\img\icon-no.svg" />
+    <Content Include="static\admin\img\icon-unknown-alt.svg" />
+    <Content Include="static\admin\img\icon-unknown.svg" />
+    <Content Include="static\admin\img\icon-yes.svg" />
+    <Content Include="static\admin\img\inline-delete.svg" />
+    <Content Include="static\admin\img\LICENSE" />
+    <Content Include="static\admin\img\README.txt" />
+    <Content Include="static\admin\img\search.svg" />
+    <Content Include="static\admin\img\selector-icons.svg" />
+    <Content Include="static\admin\img\sorting-icons.svg" />
+    <Content Include="static\admin\img\tooltag-add.svg" />
+    <Content Include="static\admin\img\tooltag-arrowright.svg" />
+    <Content Include="static\admin\js\actions.js" />
+    <Content Include="static\admin\js\actions.min.js" />
+    <Content Include="static\admin\js\admin\DateTimeShortcuts.js" />
+    <Content Include="static\admin\js\admin\RelatedObjectLookups.js" />
+    <Content Include="static\admin\js\calendar.js" />
+    <Content Include="static\admin\js\collapse.js" />
+    <Content Include="static\admin\js\collapse.min.js" />
+    <Content Include="static\admin\js\core.js" />
+    <Content Include="static\admin\js\inlines.js" />
+    <Content Include="static\admin\js\inlines.min.js" />
+    <Content Include="static\admin\js\jquery.init.js" />
+    <Content Include="static\admin\js\prepopulate.js" />
+    <Content Include="static\admin\js\prepopulate.min.js" />
+    <Content Include="static\admin\js\SelectBox.js" />
+    <Content Include="static\admin\js\SelectFilter2.js" />
+    <Content Include="static\admin\js\timeparse.js" />
+    <Content Include="static\admin\js\urlify.js" />
+    <Content Include="static\admin\js\vendor\jquery\jquery.js" />
+    <Content Include="static\admin\js\vendor\jquery\jquery.min.js" />
+    <Content Include="static\admin\js\vendor\jquery\LICENSE-JQUERY.txt" />
+    <Content Include="static\admin\js\vendor\xregexp\LICENSE-XREGEXP.txt" />
+    <Content Include="static\admin\js\vendor\xregexp\xregexp.min.js" />
+    <Content Include="static\js\shop.js" />
+    <Content Include="templates\login.html" />
+    <Content Include="requirements.txt" />
+    <Content Include="db.sqlite3" />
+    <Content Include="shop\templates\index.html" />
+    <Content Include="shop\templates\product.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.mht">
+      <SubType>WebBrowser</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <!-- Specify pre- and post-build commands in the BeforeBuild and 
+       AfterBuild targets below. -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <AutoAssignPort>True</AutoAssignPort>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

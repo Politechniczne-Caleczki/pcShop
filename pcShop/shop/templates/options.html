@@ -1,0 +1,32 @@
+﻿<table>
+    <tbody>
+        {% if shinf_list %}
+            {% for shinf in shinf_list %}
+                <tr>
+                    <td>
+                        {{ shinf }}
+                    </td>
+                    <td>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="shinf_if" value={{shinf.id }}>
+                            <input type="submit" value="Delete" />
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        {%endif%}
+        <tr>
+            <td align="center">
+                <form action="/shop/active/" method="post">
+                    <label>Name:</label> {{ form.Name }}<br />
+                    <label>Surname:</label>{{ form.Surname  }}<br />
+                    <label>Address:</label>{{ form.Address }}<br />
+                    <label>City:</label>{{ form.City }}<br />
+                    <label>Country:</label>{{ form.Country }}<br />
+                    <input type="submit" value="Dodaj" />
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

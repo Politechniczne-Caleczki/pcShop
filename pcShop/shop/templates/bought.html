@@ -1,0 +1,61 @@
+﻿<table>
+    <tbody>
+        <tr>
+            <td>
+                <p>Date: </p>
+            </td>
+            <td>
+                <p>{{ bought.Date }}</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Address: </p>
+            </td>
+            <td>
+                <p> {{ bought.ShippingInformation }}</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                {% if shinf_list %}
+                    <form action="/shop/bought/{{ bought.id }}/" method="post">
+                        {% csrf_token %}
+                        <select name="ShippingInformation">                            
+                        {% for shinf in shinf_list%}                
+                            <option value={{ shinf.id }}> {{ shinf }} </option>                                   
+                        {% endfor %}
+                        </select> 
+                    <input type="submit" value="Change" />
+                    </form>
+                {% endif %}
+            </td>            
+        </tr>
+
+        {% if order_list %}
+            {% for order in order_list %}
+            <tr>
+                <td>
+                    <a href="/shop/product/{{ order.Product.id }}/"> {{ order }}</a> 
+                </td>
+                <td>
+                    <form action="/shop/bought/{{ bought.id }}/" method="post">
+                        {% csrf_token %}
+                        <input id="id_Count" min="1" name="Count" value={{ order.Number }} type="number">
+                        <input name="Order" value={{ order.id }} type="hidden">
+                        <input value="Update" type="submit"><br>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+        <tr>
+            <td>
+               No order. 
+            </td>
+        </tr>
+        {% endif %}  
+    </tbody>
+</table>
+

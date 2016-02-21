@@ -1,0 +1,12 @@
+﻿{% if product %}
+<div>
+    <form action="/shop/basket/" method="post">
+        {% csrf_token %}
+        {{ product }}<br />           
+
+       <input id="id_Count" min="1" name="Count" value="1" type="number">
+       <input type="submit" value="Add" />    
+       <input id="id_Product" name="Product" value="1" type="hidden">
+    </form>
+</div>
+{% endif %}

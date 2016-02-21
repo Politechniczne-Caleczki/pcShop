@@ -1,0 +1,37 @@
+﻿<table align="center"  style="background-color:lightgrey; border: 1px solid black;">
+    <tbody>
+         <tr style="border: 1px solid;">                
+                <td>                     
+                    {% if categories_list %}                                        
+                            {% for categories in categories_list %}                                                                  
+                                <input type="button" onclick="addOrUpdateUrlParam('category',{{ categories.id }})"  value= {{ categories.Name }} /> <br />                                
+                            {% endfor %}                      
+                    {% else %}
+                        No category. 
+                    {% endif %}             
+                </td>
+                <td>
+                    {% if products_list %}
+                        <ul>
+                            {% for product in products_list %}
+                                <li><a href="/shop/product/{{ product.id }}/"> {{ product.Name }}</a> </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        No products. 
+                    {% endif %}                 
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>                   
+                    {% if page_list%}
+                        {% for page in page_list %}
+                            <input type="button" onclick="addOrUpdateUrlParam('page',{{ page }})"  value= {{ page }} /> 
+                        {% endfor %}
+                    {% endif %}
+
+                </td>
+            </tr>
+    </tbody>
+</table>

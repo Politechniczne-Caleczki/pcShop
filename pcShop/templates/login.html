@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Shop - login</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">  
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+</head>
+<body>
+     {% block content %}
+        {% if user.is_authenticated %}
+            <table align="center">
+                 <tr>   
+                    <td>
+                        <p>Welcome, {{ user.username }}.</p>
+                    </td>
+                 </tr>
+                <tr>
+                    <td>
+                        <a href="/shop/">Go to the shop</a>
+                    </td>
+                </tr>
+            </table>
+        {% else %}
+                  
+            <table align="center">
+            <tr>                
+                <td style="color: black;">
+                    {{ error }}  
+                    <form method="post" action="/login/">
+                         {% csrf_token %}
+                         
+                        <input type='hidden' name='redirect' value={{ redirect }} />
+                        <p>
+                            Username:
+                            <input type="text" name="username" /><br />
+                        </p>
+                        <p> 
+                            Password:                       
+                            <input type="password" name="password" /><br />
+                        </p>
+                        <input type="submit" value="Zaloguj" />
+                    </form>
+                </td>
+                <td style="color: white;"> 
+                </td>
+            </tr>
+        </table>
+
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
