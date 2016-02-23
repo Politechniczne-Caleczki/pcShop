@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^completed/(?P<com_id>[0-9]+)/$', views.completeddetail, name='CompletedDetail'), 
     url(r'^buy/$', views.buy, name='Buy'), 
     url(r'^options/$', views.options, name='Options'), 
+
 ]

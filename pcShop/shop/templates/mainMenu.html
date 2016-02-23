@@ -1,19 +1,19 @@
-﻿<table align="center" style="background-color: gold; border: 1px solid black;">
-    <tbody>
-        <tr>
-            <td>
-                <a href="/shop/">Sklep</a> 
-            </td>
-            <td>
-                <a href="/shop/basket/">Panel Uzytkonika</a>
-            </td>
-            <td>                    
-                {% if user.is_authenticated %}
-                    <a href="/logout/">Wyloguj</a>
-                {% else %}
-                    <a href="/login/">Zaloguj</a>
-                {% endif %}
-            </td>
-        </tr>
-    </tbody>
-</table>
+﻿<div style="text-align:center; font-size:medium;" id="mainmenu">
+    <div  class="mr10 ml10 br1" id="menuentry">
+        <a href="/shop/">Sklep</a> 
+    </div>
+
+    <div  class="mr10 ml10 " id="menuentry">
+        <a href="/shop/basket/">Panel Uzytkonika</a>
+    </div>
+    {% if user.is_authenticated %}
+        <div  class="mr10 ml10 " id="menuentry">
+            <a href="/logout/">Wyloguj</a>
+        </div>
+    {% else %}
+        <div  class="mr10 ml10 " id="menuentry"> 
+            <a href="/login/">Zaloguj</a>
+        </div>
+    {% endif %}
+
+</div>

@@ -2,6 +2,7 @@
     <head>
       <title>Sklep Komputerowy</title>    
       <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">  
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/style.css"> 
       <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">        
        <script type="text/javascript">
         
@@ -23,39 +24,21 @@
        </script>
     </head>
     <body>
-        <table align="center">
-            <tbody>
-                <tr> 
-                    <td>
-                        {% include "mainMenu.html" %}       
-                    </td>                   
-                </tr>
-                <tr>
-                    <td>
-                        {% include "userMenu.html" %}
-                    </td>
-                </tr>
-                {% if error_list %}
-                    <tr>
-                        <td>
-                            {% include "error.html" %}
-                        </td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <td>   
-                        {% autoescape off %}                   
+        <div class="shadowbox p10" id="topbar" max-height="60px">
+            <div id="logo" align="left" class="ml10">
+               <a href="http://127.0.0.1:8000/shop/"> <img src="/static/admin/img/Images/logo.png" height="40"/></a>
+            </div>
+        </div>
+
+        {% include "mainMenu.html" %}   
+        
+        {% if error_list %}
+        {% include "error.html" %}
+        {% endif %}
+         {% autoescape off %}                   
                             {{ content }}
                         {% endautoescape %}
-                    </td>
-                </tr>
+        {% include "stopka.html" %} 
 
-                <tr>
-                    <td>
-                        {% include "stopka.html" %} 
-                    </td>
-                </tr>
-            </tbody>              
-        </table>
     </body>
 </html>

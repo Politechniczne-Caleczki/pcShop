@@ -1,37 +1,50 @@
-﻿<table align="center"  style="background-color:lightgrey; border: 1px solid black;">
-    <tbody>
-         <tr style="border: 1px solid;">                
-                <td>                     
-                    {% if categories_list %}                                        
-                            {% for categories in categories_list %}                                                                  
-                                <input type="button" onclick="addOrUpdateUrlParam('category',{{ categories.id }})"  value= {{ categories.Name }} /> <br />                                
-                            {% endfor %}                      
-                    {% else %}
-                        No category. 
-                    {% endif %}             
-                </td>
-                <td>
-                    {% if products_list %}
-                        <ul>
+﻿<div id="container">
+
+    <div class = "m10 p10 shadowbox" id="menu" >
+        {% if categories_list %}                                        
+            {% for categories in categories_list %}                                                                  
+                <input type="button" onclick="addOrUpdateUrlParam('category',{{ categories.id }})"  value= {{ categories.Name }} /> <br />                                
+            {% endfor %}                      
+        {% else %}
+            No categories. 
+        {% endif %}     
+    </div>
+    <div class = "m10 shadowbox"  id="content">
+         {% if products_list %}
+                        
                             {% for product in products_list %}
-                                <li><a href="/shop/product/{{ product.id }}/"> {{ product.Name }}</a> </li>
+                           <a href="/shop/product/{{ product.id }}/"> 
+                            <div class="m10 p10 " style="overflow:hidden; ">
+                                <div style="width:200px; margin:0px;  ">
+                                <img src="/{{ product.Image }}" alt="No Picture" style="max-height:150px; margin:0 0 auto; display:block; max-width:200px; float:left"/>
+                                </div>
+                                <div style="text-align:center; float:right; width:360px;">
+                                   <h1 style="margin:0px;font-weight:800;"> {{ product.Name }} </h1>
+                                </div>
+                                <div class="mt10" style="text-align:right; float:right; width:360px;">
+                                     <h3 style="margin:0px; color:blue;"> {{ product.Price }} $</h3>
+                                </div>
+                                <div class="mt10" style="text-align:center; float:right; overflow:hidden; width:360px;">
+                                     <span style="margin:0px;  color:black;"> {{ product.Description}}</span>
+                                </div>
+                            </div></a>
+
                             {% endfor %}
-                        </ul>
+                        
                     {% else %}
                         No products. 
-                    {% endif %}                 
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>                   
+                    {% endif %}  
+                <div>
                     {% if page_list%}
                         {% for page in page_list %}
                             <input type="button" onclick="addOrUpdateUrlParam('page',{{ page }})"  value= {{ page }} /> 
                         {% endfor %}
                     {% endif %}
 
-                </td>
-            </tr>
-    </tbody>
-</table>
+                </div> 
+    </div>
+</div>
+
+                           
+             
+

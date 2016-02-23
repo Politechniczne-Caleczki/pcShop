@@ -1,37 +1,57 @@
-﻿{% if order_list %}
-    <form action="/shop/buy/" method="post">
+﻿
+
+<div id="container">
+    <div class = "m10 p10 shadowbox" id="menu"  >
+        {% include "userMenu.html" %}     
+    </div>
+    <div class = "m10 shadowbox"  id="content">
+
+        <form action="/shop/buy/" method="post">
         {% csrf_token %}
-        <table align="center" style="border: 1px solid black;">
+        <table align="center" style="width:100%;">
             {% for order in order_list %}
                 <tr>
+                    <td>        
+                        <img src="/{{ order.Product.Image }}" alt="No Picture" style="max-height:100px; margin:0 0 auto; display:block; max-width:150px; float:left"/>
+                    </td>
                     <td>
-                        {{ order }}
+                        {{ order.Product.Name }}
+                    </td>
+                    <td>Ilość:
+                        {{ order.Number }}
+                    </td>
+                    <td>cena jedn.:
+                        {{ order.Product.Price }}
                     </td>
                     <td>
                          <input type="checkbox" value={{ order.id}} name="Orders" />
                     </td>
                 </tr>
             {% endfor %}
-                <tr>
-                    <td>
+                <tr >
+                    <td colspan="5">
                         <p>Delivery address</p>
                         <select name="ShippingInformation">                            
                             {% for shinf in shinf_list%}                
-                                <option value={{ shinf.id }}> {{ shinf }} </option>                                   
+                                <option value={{ shinf.id }}> {{ shinf.Name }} {{ shinf.Surname }},  {{ shinf.Address }} {{ shinf.City }} {{ shinf.Country }}    </option>                                   
                             {% endfor %}
                         </select> 
 
                     
                     </td>
+
+                    
                 </tr>
                 <tr>
-                    <td>
+                    <td  colspan="5">
                         <input type="submit" name="button" value="Buy" />                                           
                         <input type="submit" name="button" value="Delete" />
                     </td>
                 </tr>
         </table>           
     </form>     
-{% else %}
-        <p> No items.</p>
-{% endif %}
+                                  
+
+    </div>
+</div>
+      

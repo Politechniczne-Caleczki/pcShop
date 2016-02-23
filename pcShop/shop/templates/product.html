@@ -1,12 +1,70 @@
 ﻿{% if product %}
-<div>
-    <form action="/shop/basket/" method="post">
-        {% csrf_token %}
-        {{ product }}<br />           
+<div id="container">
+    <div class = "m10 p10 shadowbox" id="menu" style="visibility:hidden" >
+        {% if categories_list %}                                        
+            {% for categories in categories_list %}                                                                  
+                <input type="button" onclick="addOrUpdateUrlParam('category',{{ categories.id }})"  value= {{ categories.Name }} /> <br />                                
+            {% endfor %}                      
+        {% else %}
+            No categories. 
+        {% endif %}     
+    </div>
+    <div class = "m10 shadowbox"  id="content">
+        <div style="text-align:center; float:right; width:100%;">
+            <h1 style="margin:0px;font-weight:800;"> {{ product.Name }} </h1>
+        </div>    
+        <div style="width:200px; margin-top:40px;  ">
+            <img src="/{{ product.Image }}" alt="No Picture" style="max-height:300px; margin:0 0 auto; display:block; max-width:250px; float:left"/>
+        </div>
+        <div class="mt40" style="text-align:right; float:right; width:340px;">
+            <h2 style="margin:0px; color:blue;"> {{ product.Price }} $</h2>
+        </div>
+        {% if product.Manufacturer %}  
+        <div class="mt10" style="text-align:right; float:right; width:340px;">
+            <h3 style="margin:0px; color:black;">Manufacturer: 
+                <a href="{{ product.URL}}">{{ product.Manufacturer}}</a> 
+            </h3>
+        </div>
+        {% endif %}
 
-       <input id="id_Count" min="1" name="Count" value="1" type="number">
-       <input type="submit" value="Add" />    
-       <input id="id_Product" name="Product" value="1" type="hidden">
-    </form>
+         <div class="mt10" style="text-align:right; float:right; width:340px;">
+            <h3 style="margin:0px; color:black;">
+             {% if not product.Number %}  
+                <span style="color:red">Out of stock</span>
+             {% else %}
+                 In Stock: {{ product.Number }}
+             {% endif %}
+            </h3>
+        </div>
+
+        <div class="mt10" style="text-align:right; float:right; width:340px;">
+            <h3 style="margin:0px; color:black;">
+             {% if not product.Number %}  
+                 Last time avaliable: {{ product.StocksDate }}
+             {% endif %}
+            </h3>
+        </div>
+        <div class="mt40" style="text-align:center; float:right; width:100%;">
+            <span style=" color:black;">
+                 {{ product.Description }}
+            </span>
+        </div>
+          
+        <div class="mt10" style="text-align:right; float:right; ">
+        <form action="/shop/basket/" method="post">
+            {% csrf_token %}
+            <br />       
+        
+         <input id="id_Count" min="1" name="Count" value="1" type="number">
+         <input type="submit" value="Add" />    
+         <input id="id_Product" name="Product" value="{{product.id}}" type="hidden">
+       </form>
 </div>
+
+
+                        
+
+    </div>
+</div>
+      
 {% endif %}

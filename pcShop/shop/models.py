@@ -15,12 +15,12 @@ class Product(models.Model):
     Description = models.TextField(help_text= 'Description of the product.', default = '')
     Price = models.FloatField(default = 1, help_text= 'Price per item.')
     Number = models.IntegerField(default = 0, help_text= 'In Stock')
-    Category = models.ForeignKey(ProductCategory)    
+    Category = models.ForeignKey(ProductCategory)   
     Image = models.ImageField(upload_to='image/product/', default = 'image/product/default.jpg')
     URL = models.URLField(null = True, help_text='Address of the manufacturer.')
     AddedDate = models.DateTimeField(default = timezone.now)
     StocksDate = models.DateTimeField(blank = True, null = True, help_text = 'When was the last time was available' )
-
+    
     def __unicode__(self):   
         return self.Name     
 

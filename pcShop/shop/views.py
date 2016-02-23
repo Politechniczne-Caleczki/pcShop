@@ -75,8 +75,7 @@ def shop(request):
             page_list.append(index)       
 
     if  products_list.num_pages != 1:
-        page_list.append(products_list.num_pages);
-
+        page_list.append(products_list.num_pages)
     content = render(request, 'productList.html', { 'categories_list': categories_list, 'products_list': products_list.page(page), 'page_list': page_list})
             
     return render(request,'index.html', {'error_list': error, 'content': content.content} )

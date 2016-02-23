@@ -56,6 +56,7 @@
     <Folder Include="static\admin\fonts\" />
     <Folder Include="static\admin\img\" />
     <Folder Include="static\admin\img\gis\" />
+    <Folder Include="static\admin\img\Images\" />
     <Folder Include="static\admin\js\" />
     <Folder Include="static\admin\js\admin\" />
     <Folder Include="static\admin\js\vendor\" />
@@ -75,10 +76,12 @@
     <Content Include="shop\templates\completed.html" />
     <Content Include="shop\templates\completedList.html" />
     <Content Include="shop\templates\error.html" />
+    <Content Include="shop\templates\everything.html" />
     <Content Include="shop\templates\mainMenu.html" />
     <Content Include="shop\templates\options.html" />
     <Content Include="shop\templates\productList.html" />
     <Content Include="shop\templates\stopka.html" />
+    <Content Include="static\admin\css\style.css" />
     <Content Include="shop\templates\userMenu.html" />
     <Content Include="static\admin\css\base.css" />
     <Content Include="static\admin\css\changelists.css" />
@@ -106,6 +109,7 @@
     <Content Include="static\admin\img\icon-unknown-alt.svg" />
     <Content Include="static\admin\img\icon-unknown.svg" />
     <Content Include="static\admin\img\icon-yes.svg" />
+    <Content Include="static\admin\img\Images\logo.png" />
     <Content Include="static\admin\img\inline-delete.svg" />
     <Content Include="static\admin\img\LICENSE" />
     <Content Include="static\admin\img\README.txt" />
