@@ -19,7 +19,7 @@ class ProductAdmin(admin.ModelAdmin):
         return format_html('<img src="{0}" alt="{1}"  style="width:32px;height:32px;" >'.format(obj.Image.url.replace('/media', ''), obj.Name))
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('product','Number','Date','order')
+    list_display = ('product','Number','Date','address','order',)
     readonly_fields =('product','Number','Date')
     fields =  ('product','Number','Date')
 
@@ -29,12 +29,19 @@ class OrderAdmin(admin.ModelAdmin):
     def order(self, obj):
         return  '<a href="%s">%s</a></br>' % (obj.Container.url(), 'Go to the entire order') 
 
+    def address(self, obj):
+        return Bought.objects.get(order = obj).ShippingInformation
+
     product.allow_tags = True
     order.allow_tags = True
 
     def get_queryset(self, request):     
-        b = Bought.objects.filter(~Q( ShoppingList__useraccount=None))
-        return Order.objects.filter(Q(Container__id__in = b))
+        #b = Bought.objects.filter(~Q( ShoppingList__useraccount=None))
+        return Order.objects.filter(Q(Container__id__in = Bought.objects.filter(~Q( ShoppingList__useraccount=None))))
+
+    class Media:
+        js = ('/static/js/shop.js',
+        )
 
 
 
@@ -165,11 +172,34 @@ class ShoppingListAdmin(admin.ModelAdmin):
 
     boughts.allow_tags = True 
 
+class CompletedListAdmin(admin.ModelAdmin):
+    list_display = ('user','count')
+    readonly_fields = ('boughts','user')  
+
+
+    def user(self, obj):
+        return obj.useraccount
+
+    def count(self, obj):
+        return obj.completed_set.count()
+
+
+    def boughts(self, obj):
+         odp = ''
+
+         for o in   obj.completed_set.all():        
+            odp += '<p>%s </>' % (  o)        
+         return odp                
+
+    boughts.allow_tags = True 
+
+
+
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(ShippingInformation, ShippingInformationAdmin)
-admin.site.register(CompletedList)
+admin.site.register(CompletedList,CompletedListAdmin)
 admin.site.register(ShoppingList, ShoppingListAdmin)
 admin.site.register(UserAccount)
 admin.site.register(Bought, BoughtAdmin)

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from reportlab.pdfgen import canvas
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from shop.forms import ShippingInformationForm , AddToBasketForm, BuyForm
 from shop.models import ShippingInformation , UserAccount, ProductCategory, Product, Order , Bought, Completed, CompletedList
@@ -7,8 +8,17 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.contrib.admin.views.decorators import staff_member_required
+from django.utils import timezone
+
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus.tables import Table , TableStyle
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib import colors
+cm = 2.54
 
 
+pdfmetrics.registerFont(TTFont('DejaMono', 'DejaVuSansMono.ttf'))
 
 def active(request):
     if request.user.is_authenticated() == False:
@@ -246,6 +256,31 @@ def boughtComplet(request):
     if 'bought_id' in request.POST:
         try:
             bought = Bought.objects.get(id= request.POST['bought_id'])
+
+            orders = bought.order_set.all()
+             
+            is_set = True    
+
+            number = []   
+                 
+            for order in orders:
+                if order.Product.Number >= order.Number:
+                    number.append(order.Product.Number - order.Number)
+                else:
+                    is_set = False
+
+            if is_set:
+                index = 0
+                for order in orders:
+                    order.Product.Number = number[index]
+                    if number[index] == 0:
+                         order.Product.StocksDate = timezone.now()     
+
+                    order.Product.save()
+                    index = index +1
+                       
+                    
+
             userAccount = bought.ShoppingList.useraccount
             com = Completed(CompletedList = userAccount.CompletedList)
             com.save()
@@ -317,3 +352,47 @@ def options(request):
     content = render(request, 'options.html', { 'shinf_list': shinf_list , 'form': form})
 
     return render(request,'index.html', {'error_list': error_list, 'content': content.content})
+
+
+def getfile(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="raport.pdf"' 
+
+    elements = []
+
+    doc = SimpleDocTemplate(response, rightMargin=0, leftMargin=1, topMargin=2 * cm, bottomMargin=0)
+
+    data=[]
+    table_tyle = []
+
+    index = 0
+    for o in Order.objects.raw("""SELECT o.`id`, p.`Name`, o.`Number`, o.`Date`, s.`Name` as n , s.`City` , s.`Surname`, s.`Address`, s.`Country`
+                                 FROM `shop_order` o INNER JOIN `shop_product` p ON ( o.`Product_id` = p.`id`)
+                                 INNER JOIN `shop_bought` b ON ( o.`Container_id` = b.`basket_ptr_id`)
+                                 INNER JOIN `shop_shippinginformation` s ON ( b.`ShippingInformation_id` = s.`id`)
+                                 WHERE o.`Container_id` IN (SELECT U0.`basket_ptr_id` FROM `shop_bought` U0 INNER JOIN
+                                 `shop_shoppinglist` U1 ON (U0.`ShoppingList_id` = U1.`id`) INNER JOIN `shop_useraccount`
+                                  U2 ON (U1.`id` = U2.`ShoppingList_id`) WHERE NOT (U2.`id` IS NULL))"""):
+        table_tyle.append(('TEXTCOLOR',(0,index),(2,index),colors.green))
+        table_tyle.append(('BACKGROUND',(0,index),(2,index),colors.beige))
+        data.append(('Product','Number','Date'))
+        index = index+ 1
+        table_tyle.append(('BACKGROUND',(0,index),(2,index),colors.azure))
+        data.append((o.Name, o.Number,o.Date.strftime("%d/%m/%Y %H:%M:%S")))       
+        index = index+ 1
+        table_tyle.append(('TEXTCOLOR',(0,index),(0,index),colors.green))
+        table_tyle.append(('BACKGROUND',(0,index),(0,index),colors.beige))
+        index = index+ 1
+        table_tyle.append(('BACKGROUND',(0,index),(4,index),colors.azure))
+        data.append(('Address:',))
+        data.append((o.n,o.Surname, o.City, o.Address, o.Country))
+        index = index+ 1
+
+    
+    table = Table(data, colWidths=100, rowHeights=20)
+    table.setStyle(TableStyle(table_tyle))
+    elements.append(table)
+
+    doc.build(elements) 
+    return response
+    

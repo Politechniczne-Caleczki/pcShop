@@ -68,6 +68,7 @@ class Basket(models.Model):
         return '/admin/shop/bought/%d/' % self.id
 
 
+
 class Bought(Basket):
     Date                = models.DateTimeField(default =timezone.now)
     ShippingInformation = models.ForeignKey('ShippingInformation', blank = False, null = False)  

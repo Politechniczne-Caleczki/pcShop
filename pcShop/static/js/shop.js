@@ -65,3 +65,9 @@ function Complete(bought_id)
 {
     makeRequest("/shop/bought/complet/", "POST", "&bought_id=" + bought_id);
 }
+
+(function ($) {
+    $(document).ready(function ($) {
+        $(".object-tools").append('<li><a href="/shop/getfile/" class="addlink">Get Raport</a></li>');
+    });
+})(django.jQuery);
