@@ -10,7 +10,10 @@
     <link rel="stylesheet" type="text/css" href="/static/admin/css/style.css">
 </head>
 <body>
+        
+
      {% block content %}
+
 <div id="container" >
         {% if user.is_authenticated %}
 
@@ -31,34 +34,67 @@
 
 
         {% else %}
-          <div class = "m10 shadowbox"  id="loginform" >
-            <table align="center">
-            <tr>
-                <td style="color: black;">
+          <div class = "m10 p10 shadowbox"  id="loginform" >
+            
                     {{ error }}
                     <form method="post" action="/login/">
                          {% csrf_token %}
 
                         <input type='hidden' name='redirect' value={{ redirect }} />
-                        <p>
-                            Username:
-                            <input type="text" name="username" /><br />
-                        </p>
-                        <p>
-                            Password:
-                            <input type="password" name="password" /><br />
-                        </p>
-                        <input type="submit" value="Zaloguj" />
+                        <table align="center">
+                            <tr >
+                                <td colspan="2"><h1 style="text-align:center;">Logowanie</h1></td> 
+                                 
+                            </tr>
+                            <tr>
+                                <td>Username:</td>
+                                 <td> <input type="text" name="username" /></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Password:</td>
+                                <td><input type="password" name="password" /></td>
+                            </tr>
+                            <tr>
+
+                                <td colspan="2">
+                                    <input type="submit" value="Zaloguj" />
+                                </td>
+                           </tr>
+                            </table>
                     </form>
-                </td>
-                <td style="color: white;">
-                </td>
-            </tr>
-        </table>
+                
+                
+            
+        
         <form method="post" action="/register/">
         {% csrf_token %}
-        {{ register }}
-        <input type="submit" value="Zarej" />
+            <table align="center" style="margin-top:40px;">
+                            <tr>
+                                <td colspan="2"><h1 style="text-align:center;">Rejestracja</h1></td> 
+                                 
+                            </tr>
+                            <tr>
+                                <td>Username:</td> 
+                                 <td>{{ register.username }}</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Password:</td>
+                                <td>{{ register.password }}</td>
+                            </tr>
+                            <tr>
+                                <td>E-mail:</td>
+                                <td>{{ register.email }}</td>
+                            </tr>
+                            <tr>
+
+                                <td colspan="2">
+                                    <input type="submit" value="Zarejestruj" />
+                                </td>
+                           </tr>
+            </table>
+
         </form>
 
        </div>
