@@ -1,10 +1,11 @@
-﻿{% if completed_list %}
-
-<div id="container">
+﻿<div id="container">
     <div class = "m10 p10 shadowbox" id="menu"  >
         {% include "userMenu.html" %}     
     </div>
     <div class = "m10 shadowbox"  id="content">
+{% if completed_list %}
+
+
 
  <table align="center">
         <tbody>
@@ -18,8 +19,9 @@
         </tbody>
     </table>           
                                   
-
+{% else %}
+        <h1>No orders have beed realised.</h1>
+{% endif %}
     </div>
 </div>
     
-{% endif %}

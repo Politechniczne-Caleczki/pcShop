@@ -1,10 +1,12 @@
-﻿{% if bought_list %}
-
-<div id="container">
+﻿<div id="container">
     <div class = "m10 p10 shadowbox" id="menu"  >
         {% include "userMenu.html" %}     
     </div>
+    
     <div class = "m10 shadowbox"  id="content">
+{% if bought_list %}
+
+
 
         <form action="/shop/buy/" method="post">
         
@@ -28,7 +30,9 @@
 </table>       
     </form>     
                                   
+{% else %}
+    <h1>No products</h1>
 
-    </div>
-</div>
 {% endif %}
+        </div>
+</div>

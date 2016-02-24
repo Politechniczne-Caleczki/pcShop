@@ -3,16 +3,63 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Active</title>
+    <title>Shop - login</title>
 
-    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">  
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
     <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/style.css">
 </head>
 <body>
-    <form action="/shop/active/" method="post">
-    {% csrf_token %}
-    {{ form}}
-    <input type="submit" value="Submit" />
-</form>
+        
+
+
+<div id="container" >
+
+          <div class = "m10 p10 shadowbox"  id="loginform" >
+            
+                    {{ error }}
+                    <form action="/shop/active/" method="post">
+                         {% csrf_token %}
+                        <table align="center">
+                            <tr >
+                                <td colspan="2"><h1 style="text-align:center;">Uzupełnij aby aktywować konto:</h1></td> 
+                                 
+                            </tr>
+                            <tr>
+                                <td>Name:</td>
+                                 <td> {{ form.Name }}</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Surname:</td>
+                                <td>{{ form.Surname }}</td>
+                            </tr>
+                            <tr>
+                                <td>Address:</td>
+                                <td>{{ form.Address }}</td>
+                            </tr>
+                            <tr>
+                                <td>City:</td>
+                                <td>{{ form.City }}</td>
+                            </tr>
+                            <tr>
+                                <td>Country:</td>
+                                <td>{{ form.Country }}</td>
+                            </tr>
+                            <tr>
+
+                                <td colspan="2">
+                                    <input type="submit" value="Aktywuj" />
+                                </td>
+                           </tr>
+                            </table>
+                    </form>
+                
+
+       </div>
+            
+
+            </div>
+
 </body>
 </html>
