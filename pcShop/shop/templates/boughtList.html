@@ -1,20 +1,34 @@
 ﻿{% if bought_list %}
-<table align="center">
+
+<div id="container">
+    <div class = "m10 p10 shadowbox" id="menu"  >
+        {% include "userMenu.html" %}     
+    </div>
+    <div class = "m10 shadowbox"  id="content">
+
+        <form action="/shop/buy/" method="post">
+        
+        <table align="center">
     <tbody>
     {% for bought in bought_list %}
         <tr>
             <td>
-                <a href="/shop/bought/{{ bought.id }}/">{{bought}}</a><br />
+                    <a href="/shop/bought/{{ bought.id }}/">{{bought}}</a><br />
             </td>
             <td>
                 <form action="/shop/bought/" method="post">
                     {% csrf_token %}
                     <input name="Bought" value={{ bought.id }} type="hidden">
-                    <input type="submit" value="Delete"  />
+                    <input type="submit" value="Anuluj Zamówienie"  />
                 </form>
             </td>
         </tr>
     {% endfor %}
     </tbody>
-</table>
+</table>       
+    </form>     
+                                  
+
+    </div>
+</div>
 {% endif %}

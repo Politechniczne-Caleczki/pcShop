@@ -1,10 +1,18 @@
-﻿<table>
+﻿<div id="container">
+    <div class = "m10 p10 shadowbox" id="menu"  >
+        {% include "userMenu.html" %}     
+    </div>
+    <div class = "m10 shadowbox"  id="content">
+
+
+        
+<table>
     <tbody>
         {% if shinf_list %}
             {% for shinf in shinf_list %}
                 <tr>
                     <td>
-                        {{ shinf }}
+                        {{ shinf.Address }}
                     </td>
                     <td>
                         <form action="" method="post">
@@ -16,17 +24,45 @@
                 </tr>
             {% endfor %}
         {%endif%}
-        <tr>
-            <td align="center">
+
                 <form action="/shop/active/" method="post">
-                    <label>Name:</label> {{ form.Name }}<br />
-                    <label>Surname:</label>{{ form.Surname  }}<br />
-                    <label>Address:</label>{{ form.Address }}<br />
-                    <label>City:</label>{{ form.City }}<br />
-                    <label>Country:</label>{{ form.Country }}<br />
-                    <input type="submit" value="Dodaj" />
+                    <tr>
+                       <td> <label>Name:</label> 
+                        </td>
+                        <td>{{ form.Name }}</td>       
+                    </tr>
+                    <tr>
+                       <td> <label>Surname:</label> 
+                        </td>
+                        <td>{{ form.Surname }}</td>       
+                    </tr>
+                    <tr>
+                       <td> <label>Address:</label> 
+                        </td>
+                        <td>{{ form.Address }}</td>       
+                    </tr>
+                    <tr>
+                       <td> <label>City:</label> 
+                        </td>
+                        <td>{{ form.City }}</td>       
+                    </tr>
+                    <tr>
+                       <td> <label>Country:</label> 
+                        </td>
+                        <td>{{ form.Country }}</td>       
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Dodaj" /></td>
+                    </tr>
+                    
                 </form>
-            </td>
-        </tr>
+           
+        
     </tbody>
-</table>
+</table> 
+    
+                                  
+
+    </div>
+</div>

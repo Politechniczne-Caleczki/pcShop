@@ -1,13 +1,25 @@
 ﻿{% if completed_list %}
-    <table align="center">
+
+<div id="container">
+    <div class = "m10 p10 shadowbox" id="menu"  >
+        {% include "userMenu.html" %}     
+    </div>
+    <div class = "m10 shadowbox"  id="content">
+
+ <table align="center">
         <tbody>
                 {% for completed in completed_list%}
                     <tr>
                         <td>
-                            <a href="/shop/completed/{{ completed.id }}/">{{completed}}</a><br />
+                            <a href="/shop/product/{{ completed.id }}/">{{completed}}</a><br />
                         </td>
                     </tr>
                 {% endfor %}
         </tbody>
-    </table>        
+    </table>           
+                                  
+
+    </div>
+</div>
+    
 {% endif %}

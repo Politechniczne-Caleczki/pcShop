@@ -1,4 +1,12 @@
-﻿<table>
+﻿
+
+<div id="container">
+    <div class = "m10 p10 shadowbox" id="menu"  >
+        {% include "userMenu.html" %}     
+    </div>
+    <div class = "m10 shadowbox"  id="content">
+
+<table>
     <tbody>
         <tr>
             <td>
@@ -13,7 +21,8 @@
                 <p>Address: </p>
             </td>
             <td>
-                <p> {{ bought.ShippingInformation }}</p>
+                <p> {{ bought.ShippingInformation.Name }} {{ bought.ShippingInformation.Surname }} 
+                {{ bought.ShippingInformation.Address }} {{ bought.ShippingInformation.City}} {{ bought.ShippingInformation.Country }}</p>
             </td>
         </tr>
         <tr>
@@ -24,7 +33,7 @@
                         {% csrf_token %}
                         <select name="ShippingInformation">                            
                         {% for shinf in shinf_list%}                
-                            <option value={{ shinf.id }}> {{ shinf }} </option>                                   
+                            <option value={{ shinf.id }}> {{ shinf.Name }} {{ shinf.Surname }},  {{ shinf.Address }} {{ shinf.City }} {{ shinf.Country }} </option>                                   
                         {% endfor %}
                         </select> 
                     <input type="submit" value="Change" />
@@ -37,7 +46,7 @@
             {% for order in order_list %}
             <tr>
                 <td>
-                    <a href="/shop/product/{{ order.Product.id }}/"> {{ order }}</a> 
+                    <a href="/shop/product/{{ order.Product.id }}/"> {{ order.Product.Name }}</a> 
                 </td>
                 <td>
                     <form action="/shop/bought/{{ bought.id }}/" method="post">
@@ -58,4 +67,8 @@
         {% endif %}  
     </tbody>
 </table>
+    
+                                  
 
+    </div>
+</div>

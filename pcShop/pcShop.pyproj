@@ -76,7 +76,6 @@
     <Content Include="shop\templates\completed.html" />
     <Content Include="shop\templates\completedList.html" />
     <Content Include="shop\templates\error.html" />
-    <Content Include="shop\templates\everything.html" />
     <Content Include="shop\templates\mainMenu.html" />
     <Content Include="shop\templates\options.html" />
     <Content Include="shop\templates\productList.html" />
