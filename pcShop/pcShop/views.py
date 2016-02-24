@@ -19,7 +19,7 @@ def _login(request):
         if 'redirect' in request.GET:
             return  render(request, 'login.html', {'redirect': request.GET['redirect']}) 
         else:
-            return  render(request, 'login.html', {'register': RegisterForm()}) 
+            return  render(request, 'login.html', {'register': RegisterForm(request.POST)}) 
     else:
         if 'username' not in request.POST:
             error = 'Not specified username.';
@@ -50,7 +50,7 @@ def _login(request):
                 return redirect('Active')
         else:
             error = 'Bad username or password.'
-            return render(request, 'login.html', {'error': error, 'register': RegisterForm()}) 
+            return render(request, 'login.html', {'error': error, 'register': RegisterForm(request.POST)}) 
 
 def _register(request):
     if request.user.is_authenticated():
@@ -58,24 +58,24 @@ def _register(request):
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
 
             _username = request.POST['username']
             _password = request.POST['password']
             _email = request.POST['email'] 
 
             if User.objects.filter(email= _email).exists():
-                return render(request, 'login.html', {'error': ['Account with this address already exists.',], 'register': RegisterForm()})   
+                return render(request, 'login.html', {'error': ['Account with this address already exists.',], 'register': form})   
 
             if User.objects.filter(username = _username).exists():
-                return render(request, 'login.html', {'error': ['Account with that name already exists.',], 'register': RegisterForm()}) 
+                return render(request, 'login.html', {'error': ['Account with that name already exists.',], 'register': form}) 
 
             user = User.objects.create_user(_username,_email,_password)
             user.is_active = False
             user.save()  
             return render(request, 'login.html', {'message': ['Account created correctly, please login.',], 'register': RegisterForm()})      
         else:
-            return render(request, 'login.html', {'error': ['Complete all fields correctly.',], 'register': RegisterForm()})    
+            return render(request, 'login.html', {'error': ['Complete all fields correctly.',], 'register': form})    
 
     return redirect('Login')
     
