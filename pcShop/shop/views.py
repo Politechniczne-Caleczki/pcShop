@@ -49,9 +49,11 @@ def active(request):
     
 
 def shop(request):
-    categories_list = ProductCategory.objects.all()     
+    categories_list =list(ProductCategory.objects.raw("SELECT `shop_productcategory`.`id`, `shop_productcategory`.`Name` FROM `shop_productcategory`"))
     error = []
   
+    products_list = None
+
     if 'category' in request.GET:
         category = None
         try:
@@ -61,11 +63,15 @@ def shop(request):
             error.append('Bad index category.')           
     
         if category is not None:
-            products_list = Product.objects.filter( Category= category)
-        else:
-            products_list = Product.objects.all()
+            products_list =list(Product.objects.raw("""SELECT `shop_product`.`id`, `shop_product`.`Name`, `shop_product`.`Manufacturer`,
+                                                          `shop_product`.`Description`, `shop_product`.`Price`, `shop_product`.`Number`,
+                                                          `shop_product`.`Image`, `shop_product`.`AddedDate`, `shop_product`.`StocksDate` FROM `shop_product` WHERE 
+                                                          `shop_product`.`Category_id` = %s""", [_id])  )
     else:
-        products_list = Product.objects.all()    
+        if products_list is None:
+            products_list =list( Product.objects.raw("""SELECT `shop_product`.`id`, `shop_product`.`Name`, `shop_product`.`Manufacturer`
+                                            , `shop_product`.`Description`, `shop_product`.`Price`, `shop_product`.`Number`,
+                                              `shop_product`.`Image`, `shop_product`.`AddedDate`, `shop_product`.`StocksDate` FROM `shop_product`"""))
 
     products_list = Paginator(products_list,20)   
     page = 1
@@ -306,7 +312,11 @@ def completeddetail(request, com_id):
     error_list = []
     userAccount = UserAccount.objects.get(User = request.user)   
     try:
-        complete = userAccount.CompletedList.completed_set.get(id = com_id)
+        #complete = userAccount.CompletedList.completed_set.get(id = com_id)
+        complete=   list(ShoppingList.objects.raw("""SELECT `shop_shoppinglist`.`id`, `shop_completed`.`shoppinglist_ptr_id`, `shop_completed`.`Date`,
+                                 `shop_completed`.`CompletedList_id` FROM `shop_completed` INNER JOIN 
+                                  `shop_shoppinglist` ON (`shop_completed`.`shoppinglist_ptr_id` = `shop_shoppinglist`.`id`) 
+                                  WHERE (`shop_completed`.`CompletedList_id` = %d AND `shop_completed`.`shoppinglist_ptr_id` = %s)""", [userAccount.CompletedList.id, com_id]))
 
         content =render(request, 'completed.html', {'completed':complete})
         return render(request,'index.html', {'error_list': error_list, 'content': content.content })
@@ -326,10 +336,9 @@ def options(request):
     error_list = []
     content = None
     form= ShippingInformationForm()
- 
-    try:
-        userAccount = UserAccount.objects.get(User = request.user)              
-
+    
+    try:                    
+        userAccount,_ = UserAccount.objects.get_or_create(User = request.user) 
         if request.method == 'POST': 
 
             if 'shinf_if' in request.POST:
