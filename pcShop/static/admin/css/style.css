@@ -5,13 +5,23 @@
 }
 
 #container{
-    
+margin-top:50px;
 margin-left:5%;
 overflow: hidden;
 text-align:center;
 
 
 }
+
+#logo{
+
+      display: inline-block;
+}
+#cart{
+    float:right;
+    display: inline-block;
+}
+
 #mainmenu{
     padding-top:60px;
 }
@@ -23,11 +33,17 @@ text-align:center;
     background-color:white;
 
 }
+#loginform{
+
+    width:50%;
+    margin: 0 auto;
+    background-color:white;
+}
 
 #content{
     min-width:600px;
     width:50%;
-    margin 0 0 auto;
+
     float: left;
     background-color:white;
 }
@@ -71,6 +87,9 @@ pt10{
 pb10{
     padding-bottom:10px;
 }
+pb20{
+    padding-bottom:20px;
+}
 pt40{
     padding-top:40px;
 }
@@ -85,6 +104,12 @@ pb40{
 }
 .mr10{
     margin-right:10px;
+}
+.mr40{
+    margin-right:40px;
+}
+.mt5{
+    margin-top: 5px;
 }
 .mt10{
     margin-top: 10px;

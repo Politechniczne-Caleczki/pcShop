@@ -5,14 +5,18 @@
     <meta charset="utf-8" />
     <title>Shop - login</title>
 
-    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">  
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
     <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/style.css">
 </head>
 <body>
      {% block content %}
+<div id="container" >
         {% if user.is_authenticated %}
-            <table align="center">
-                 <tr>   
+
+    <div class = "m10 shadowbox"  id="content">
+                   <table align="center">
+                 <tr>
                     <td>
                         <p>Welcome, {{ user.username }}.</p>
                     </td>
@@ -23,28 +27,31 @@
                     </td>
                 </tr>
             </table>
+    </div>
+
+
         {% else %}
-                  
+          <div class = "m10 shadowbox"  id="loginform" >
             <table align="center">
-            <tr>                
+            <tr>
                 <td style="color: black;">
-                    {{ error }}  
+                    {{ error }}
                     <form method="post" action="/login/">
                          {% csrf_token %}
-                         
+
                         <input type='hidden' name='redirect' value={{ redirect }} />
                         <p>
                             Username:
                             <input type="text" name="username" /><br />
                         </p>
-                        <p> 
-                            Password:                       
+                        <p>
+                            Password:
                             <input type="password" name="password" /><br />
                         </p>
                         <input type="submit" value="Zaloguj" />
                     </form>
                 </td>
-                <td style="color: white;"> 
+                <td style="color: white;">
                 </td>
             </tr>
         </table>
@@ -54,7 +61,11 @@
         <input type="submit" value="Zarej" />
         </form>
 
+       </div>
+            
         {% endif %}
+            </div>
     {% endblock %}
+
 </body>
 </html>
