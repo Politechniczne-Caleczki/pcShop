@@ -230,7 +230,7 @@ def completed(request):
 @staff_member_required
 def boughtComplet(request):
     if request.user.is_authenticated() == False:
-        return HttpResponse('/login/')
+        return HttpResponse('/admin/')
 
     if 'bought_id' in request.POST:
         try:
@@ -239,7 +239,8 @@ def boughtComplet(request):
             com = Completed(CompletedList = userAccount.CompletedList)
             com.save()
 
-            bought.ShoppingList = com           
+            bought.ShoppingList = com     
+            bought.save()      
             
         except  ObjectDoesNotExist:
             return HttpResponse('')
