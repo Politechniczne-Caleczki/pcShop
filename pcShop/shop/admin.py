@@ -27,7 +27,7 @@ class OrderAdmin(admin.ModelAdmin):
         return  '<a href="%s">%s</a></br>' % (obj.Product.url(), obj.Product)
 
     def order(self, obj):
-        return  '<a href="%s">%s</a></br>' % (obj.Container.url(), obj.Container) 
+        return  '<a href="%s">%s</a></br>' % (obj.Container.url(), 'Go to the entire order') 
 
     product.allow_tags = True
     order.allow_tags = True
@@ -143,16 +143,27 @@ class ShippingInformationAdmin(admin.ModelAdmin):
         
 
 class ShoppingListAdmin(admin.ModelAdmin):
-    list_display = ('user',)
+    list_display = ('user','count')
+    readonly_fields = ('boughts','user')  
 
 
     def user(self, obj):
         return obj.useraccount
 
+    def count(self, obj):
+        return obj.bought_set.count()
+
     def get_queryset(self, request):
         return super(ShoppingListAdmin, self).get_queryset(request).filter( ~Q(useraccount = None))
 
+    def boughts(self, obj):
+         odp = ''
 
+         for o in   obj.bought_set.all():        
+            odp += '<a href="%s">%s</a></br>' % ( o.url(),  o)        
+         return odp                
+
+    boughts.allow_tags = True 
 
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)

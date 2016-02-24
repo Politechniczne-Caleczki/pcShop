@@ -7,7 +7,10 @@ class ProductCategory(models.Model):
     Name = models.CharField(max_length = 64) 
 
     def __unicode__(self):   
-        return self.Name      
+        return self.Name    
+
+    class Meta:
+        verbose_name_plural = 'Categories - list of all category products'
 
 class Product(models.Model):
     Name = models.CharField(max_length = 64, help_text = 'Name of the product.', default= '')
@@ -27,6 +30,10 @@ class Product(models.Model):
     def url(self):
         return '/admin/shop/product/%d/' % self.id   
 
+    class Meta:
+        verbose_name_plural = 'Products - list of all products'
+        
+
 class Order(models.Model):
     Product         = models.ForeignKey(Product,null =False, blank=False)
     Number          = models.IntegerField(default = 1)
@@ -43,6 +50,9 @@ class Order(models.Model):
         if self.Product.Number >= self.Number:
             return True
         return False
+
+    class Meta:
+        verbose_name_plural = 'Orders - list of orders for a single product'
 
 
 
@@ -77,6 +87,9 @@ class Bought(Basket):
 
     def url(self):
         return '/admin/shop/bought/%d/' % self.id 
+
+    class Meta:
+        verbose_name_plural = 'Bought - list of orders transferred to realization'
     
 
 
@@ -84,15 +97,24 @@ class ShoppingList(models.Model):
     def __unicode__(self):
         return  'Shopping list'
 
+    class Meta:
+        verbose_name_plural = 'Shopping List - a list of purchases for a single user'
+
+
 class Completed(ShoppingList): 
     Date                = models.DateTimeField(default =timezone.now)
     CompletedList        = models.ForeignKey('CompletedList', blank = False, null = False)
     def __unicode__(self):
         return  'Completed order of: %s'  % (self.Date.strftime("%d/%m/%Y %H:%M:%S"))
 
+
+
 class CompletedList(models.Model):
     def __unicode__(self):
         return  'Completed list order of'
+
+    class Meta:
+        verbose_name_plural = 'Completed - the list of completed transactions'
     
  
 class UserAccount(models.Model):
@@ -134,4 +156,8 @@ class ShippingInformation(models.Model):
 
     def url(self):
         return '/admin/shop/shippinginformation/%d/' % self.id
+
+
+    class Meta:
+        verbose_name_plural = 'Delivery addresses'
 
