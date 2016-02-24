@@ -106,7 +106,9 @@ def basket(request):
             if form.is_valid():                 
                 return redirect('/login/?redirect=/shop/product/%s/?count=%s&' % (form.cleaned_data['Product'], form.cleaned_data['Count']))              
         return redirect('Login')
-    else:
+    if request.user.is_active == False:
+        return redirect('Active')
+    else: 
         error = []
         userAccount = UserAccount.objects.get(User = request.user)  
         if request.method == 'POST':        
@@ -130,6 +132,9 @@ def basket(request):
 def buy(request):
     if request.user.is_authenticated() == False:
         return redirect('Login')
+
+    if request.user.is_active == False:
+        return redirect('Active')
     else:
         if request.method == 'POST':    
             form = BuyForm(request.POST)
@@ -170,7 +175,8 @@ def buy(request):
 def bought(request):
     if request.user.is_authenticated() == False:
         return redirect('Login')  
-
+    if request.user.is_active == False:
+        return redirect('Active')
     
     userAccount = UserAccount.objects.get(User = request.user)    
 
@@ -188,6 +194,8 @@ def bought(request):
 def boughtdetail(request, bought_id):
     if request.user.is_authenticated() == False:
         return redirect('Login')
+    if request.user.is_active == False:
+        return redirect('Active')
     
     error_list = []
 
@@ -220,6 +228,8 @@ def boughtdetail(request, bought_id):
 def completed(request):
     if request.user.is_authenticated() == False:
         return redirect('Login')
+    if request.user.is_active == False:
+        return redirect('Active')
 
     userAccount = UserAccount.objects.get(User = request.user)    
     completed_list = userAccount.CompletedList.completed_set.all()         
@@ -254,7 +264,9 @@ def boughtComplet(request):
 
 def completeddetail(request, com_id):
     if request.user.is_authenticated() == False:
-        return redirect('Login')     
+        return redirect('Login') 
+    if request.user.is_active == False:
+        return redirect('Active')    
 
     error_list = []
     userAccount = UserAccount.objects.get(User = request.user)   
@@ -271,7 +283,10 @@ def completeddetail(request, com_id):
 
 def options(request):
     if request.user.is_authenticated() == False:
-        return redirect('Login')    
+        return redirect('Login')   
+
+    if request.user.is_active == False:
+        return redirect('Active') 
 
     error_list = []
     content = None

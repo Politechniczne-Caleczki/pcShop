@@ -16,3 +16,8 @@ class AddToBasketForm(forms.Form):
 
 class BuyForm(forms.Form):
     ShippingInformation  = forms.IntegerField()
+
+class RegisterForm(forms.Form):
+    username        = forms.CharField(max_length = 64, min_length = 8)
+    password        = forms.CharField( max_length = 64, min_length = 8,widget = forms.PasswordInput())
+    email           = forms.CharField(max_length = 64, min_length = 6, widget = forms.EmailInput())

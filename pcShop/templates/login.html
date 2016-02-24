@@ -48,6 +48,11 @@
                 </td>
             </tr>
         </table>
+        <form method="post" action="/register/">
+        {% csrf_token %}
+        {{ register }}
+        <input type="submit" value="Zarej" />
+        </form>
 
         {% endif %}
     {% endblock %}

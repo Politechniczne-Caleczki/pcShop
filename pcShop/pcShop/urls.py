@@ -18,7 +18,7 @@ urlpatterns = [
    url(r'^$', views.index,name='Index'),
    url(r'^login/$', views._login , name = 'Login'),
    url(r'^logout/$', views._logout , name = 'Logout'),
-
+   url(r'^register/$', views._register , name = 'Register'),
 
    url(r'^shop/', include('shop.urls')),   
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
