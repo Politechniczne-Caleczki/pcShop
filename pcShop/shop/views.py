@@ -19,7 +19,7 @@ def active(request):
 
     else:
         if request.method == 'GET':
-            return render(request,'active.html', {'form': ShippingInformationForm()})
+            return render(request,'active.html', {'form': ShippingInformationForm(request.POST)})
         else:
             form = ShippingInformationForm(request.POST)
             
@@ -34,7 +34,7 @@ def active(request):
                 
                 return redirect('Shop')
             else:
-                return render(request,'active.html', {'form': ShippingInformationForm()})          
+                return render(request,'active.html', {'form': ShippingInformationForm(request.POST)})          
             
     
 

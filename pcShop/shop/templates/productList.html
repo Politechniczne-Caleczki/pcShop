@@ -2,8 +2,10 @@
 
     <div class = "m10 p10 shadowbox" id="menu" >
         {% if categories_list %}                                        
-            {% for categories in categories_list %}                                                                  
-                <input type="button" onclick="addOrUpdateUrlParam('category',{{ categories.id }})"  value= {{ categories.Name }} /> <br />                                
+            {% for categories in categories_list %}      
+        <div  class="mr10 ml10 br1" id="menuentry">                                                            
+                <a href="/shop/?category={{ categories.id }}">{{ categories.Name }}</a>  
+            </div>                          
             {% endfor %}                      
         {% else %}
             No categories. 
@@ -25,7 +27,7 @@
                                      <h3 style="margin:0px; color:blue;"> {{ product.Price }} $</h3>
                                 </div>
                                 <div class="mt10" style="text-align:center; float:right; overflow:hidden; width:360px;">
-                                     <span style="margin:0px;  color:black;"> {{ product.Description}}</span>
+                                     <span style="margin:0px;  color:black;"> {{ product.Description|slice:":150"}}...</span>
                                 </div>
                             </div></a>
 
