@@ -28,9 +28,21 @@
             <div id="logo" align="left" class="ml10">
                <a href="http://127.0.0.1:8000/shop/"> <img src="/static/admin/img/Images/logo.png" height="40"/></a>
             </div>
+            <div id="cart" align="right" class="mr40 mt5">
+               <a href="http://127.0.0.1:8000/shop/basket/"> <img src="/static/admin/img/Images/shopping-cart.png" height="30"/></a>
+            </div>
+            {% if user.is_authenticated %}
+            <div id="cart" align="right" class="mr10 mt10">
+               <a href="http://127.0.0.1:8000/shop/options/">{{ user.username }}</a>
+            </div>
+            {% else %}
+            <div id="cart" align="right" class="mr10 mt10">
+               <a href="http://127.0.0.1:8000/login/">Zaloguj</a>
+            </div>
+            {% endif %}
         </div>
 
-        {% include "mainMenu.html" %}   
+
         
         {% if error_list %}
         {% include "error.html" %}

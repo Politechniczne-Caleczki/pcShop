@@ -7,11 +7,15 @@
 
     <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">  
     <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/style.css"> 
 </head>
 <body>
      {% block content %}
+<div id="container" >        
         {% if user.is_authenticated %}
-            <table align="center">
+
+    <div class = "m10 shadowbox"  id="content">
+                   <table align="center">
                  <tr>   
                     <td>
                         <p>Welcome, {{ user.username }}.</p>
@@ -22,9 +26,12 @@
                         <a href="/shop/">Go to the shop</a>
                     </td>
                 </tr>
-            </table>
+            </table>    
+    </div>
+
+
         {% else %}
-                  
+          <div class = "m10 shadowbox"  id="loginform" >
             <table align="center">
             <tr>                
                 <td style="color: black;">
@@ -48,8 +55,11 @@
                 </td>
             </tr>
         </table>
-
+       </div>    
+            
         {% endif %}
+            </div>
     {% endblock %}
+   
 </body>
 </html>
