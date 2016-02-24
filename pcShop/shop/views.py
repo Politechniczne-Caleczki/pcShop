@@ -29,7 +29,8 @@ def active(request):
                 shipInfo = ShippingInformation(**form.cleaned_data)
                 shipInfo.UserAccounts = userAccount
                 shipInfo.save()
-                request.user.is_active = True                               
+                request.user.is_active = True 
+                request.user.save()                              
                 
                 return redirect('Shop')
             else:
@@ -274,21 +275,30 @@ def options(request):
 
     error_list = []
     content = None
-    
-
-
-
+    form= ShippingInformationForm()
+ 
     try:
-        userAccount = UserAccount.objects.get(User = request.user)  
+        userAccount = UserAccount.objects.get(User = request.user)              
 
-        if request.method == 'GET':
-            form= ShippingInformationForm()
+        if request.method == 'POST': 
 
-        shinf_list = userAccount.shippinginformation_set.all()
+            if 'shinf_if' in request.POST:
+                userAccount.shippinginformation_set.get(id = request.POST['shinf_if']).delete()                                                                             
+                return redirect('Options') 
+            else:
+                form = ShippingInformationForm(request.POST)
+                if form.is_valid():
+                    shipInfo = ShippingInformation(**form.cleaned_data)
+                    shipInfo.UserAccounts = userAccount
+                    shipInfo.save()
+                    return redirect('Options') 
+                else:
+                    error_list.append('Complete all fields correctly')            
 
-        content = render(request, 'options.html', { 'shinf_list': shinf_list , 'form': form})
     except  ObjectDoesNotExist:                                                                                                                                                                       
         error_list.append('Error')
- 
+
+    shinf_list = userAccount.shippinginformation_set.all() 
+    content = render(request, 'options.html', { 'shinf_list': shinf_list , 'form': form})
 
     return render(request,'index.html', {'error_list': error_list, 'content': content.content})

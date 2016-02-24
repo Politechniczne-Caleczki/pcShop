@@ -25,7 +25,8 @@
             {% endfor %}
         {%endif%}
 
-                <form action="/shop/active/" method="post">
+                <form action="" method="post">
+                    {% csrf_token %}
                     <tr>
                        <td> <label>Name:</label> 
                         </td>
