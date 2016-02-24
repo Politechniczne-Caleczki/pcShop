@@ -57,21 +57,23 @@ def _register(request):
         return redirect('Shop');
 
     if request.method == 'POST':
-        _username = request.POST['username']
-        _password = request.POST['password']
-        _email = request.POST['email'] 
-
-        if User.objects.filter(email= _email).exists():
-            return render(request, 'login.html', {'error': ['Account with this address already exists.',], 'register': RegisterForm()})   
-
-        if User.objects.filter(username = _username).exists():
-            return render(request, 'login.html', {'error': ['Account with that name already exists.',], 'register': RegisterForm()}) 
-
         form = RegisterForm(request.POST)
         if form.is_valid:
+
+            _username = request.POST['username']
+            _password = request.POST['password']
+            _email = request.POST['email'] 
+
+            if User.objects.filter(email= _email).exists():
+                return render(request, 'login.html', {'error': ['Account with this address already exists.',], 'register': RegisterForm()})   
+
+            if User.objects.filter(username = _username).exists():
+                return render(request, 'login.html', {'error': ['Account with that name already exists.',], 'register': RegisterForm()}) 
+
             user = User.objects.create_user(_username,_email,_password)
             user.is_active = False
-            user.save()        
+            user.save()  
+            return render(request, 'login.html', {'message': ['Account created correctly, please login.',], 'register': RegisterForm()})      
         else:
             return render(request, 'login.html', {'error': ['Complete all fields correctly.',], 'register': RegisterForm()})    
 
