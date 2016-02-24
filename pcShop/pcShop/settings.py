@@ -164,3 +164,5 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = path.join(PROJECT_ROOT, 'media').replace('\\', '/')
+
+APPEND_SLASH = True

@@ -24,11 +24,14 @@ class Product(models.Model):
     def __unicode__(self):   
         return self.Name     
 
+    def url(self):
+        return '/admin/shop/product/%d/' % self.id   
+
 class Order(models.Model):
-    Product         = models.ForeignKey(Product)
+    Product         = models.ForeignKey(Product,null =False, blank=False)
     Number          = models.IntegerField(default = 1)
     Date            = models.DateTimeField(default =timezone.now)
-    Container       = models.ForeignKey('Basket')
+    Container       = models.ForeignKey('Basket', null = False, blank = False)
 
     def __unicode__(self):   
         return  'Order {0} at {1}.'.format(self.Product.Name, self.Number) 
@@ -43,9 +46,17 @@ class Order(models.Model):
 
 
 
+
 class Basket(models.Model):   
     def __unicode__(self):
         return  'Basket'
+
+    def is_basket(self):
+        return True;
+
+    def url(self):
+        return '/admin/shop/bought/%d/' % self.id
+
 
 class Bought(Basket):
     Date                = models.DateTimeField(default =timezone.now)
@@ -63,6 +74,9 @@ class Bought(Basket):
             if order.is_available() == False:
                 return False
         return True
+
+    def url(self):
+        return '/admin/shop/bought/%d/' % self.id 
     
 
 
@@ -101,6 +115,9 @@ class UserAccount(models.Model):
             self.CompletedList, _   = CompletedList.objects.get_or_create(id= self.id)  
 
         return super(UserAccount, self).save(*args, **kwargs)
+
+    def __unicode__(self):  
+        return self.User.username
 
 
 class ShippingInformation(models.Model):
