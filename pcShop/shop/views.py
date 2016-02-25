@@ -15,6 +15,7 @@ from reportlab.platypus.tables import Table , TableStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib import colors
+import math
 cm = 2.54
 
 
@@ -51,27 +52,40 @@ def active(request):
 def shop(request):
     categories_list =list(ProductCategory.objects.raw("SELECT `shop_productcategory`.`id`, `shop_productcategory`.`Name` FROM `shop_productcategory`"))
     error = []
-  
-    products_list = None
+    category = []
+    search = ""   
+    max = 100000
+    min = 0
 
-    if 'category' in request.GET:
-        category = None
-        try:
-            _id = int(request.GET['category'])
-            category = ProductCategory.objects.get(id = _id)
-        except ValueError:
-            error.append('Bad index category.')           
-    
-        if category is not None:
-            products_list =list(Product.objects.raw("""SELECT `shop_product`.`id`, `shop_product`.`Name`, `shop_product`.`Manufacturer`,
-                                                          `shop_product`.`Description`, `shop_product`.`Price`, `shop_product`.`Number`,
-                                                          `shop_product`.`Image`, `shop_product`.`AddedDate`, `shop_product`.`StocksDate` FROM `shop_product` WHERE 
-                                                          `shop_product`.`Category_id` = %s""", [_id])  )
+
+    if 'category' in request.GET: 
+        if request.GET['category'] != '':       
+            category.append(request.GET['category'])
     else:
-        if products_list is None:
-            products_list =list( Product.objects.raw("""SELECT `shop_product`.`id`, `shop_product`.`Name`, `shop_product`.`Manufacturer`
-                                            , `shop_product`.`Description`, `shop_product`.`Price`, `shop_product`.`Number`,
-                                              `shop_product`.`Image`, `shop_product`.`AddedDate`, `shop_product`.`StocksDate` FROM `shop_product`"""))
+        for c in categories_list:
+            category.append(c.id) 
+    
+    if 'search' in request.POST:
+        search = request.POST['search'] 
+
+    if 'min' in request.POST:
+        min = int(request.POST['min'] )
+
+    if 'max' in request.POST:
+        max =  int(request.POST['max'] )
+
+    if max < min:
+        t = max
+        max = min  
+        min = t
+
+    Product.objects.filter(Category__id__in = [1,2], Name__contains = "jakis", Price__lte = min, Price__gte = min)
+
+    
+    products_list = list(Product.objects.raw("""SELECT `shop_product`.`id`, `shop_product`.`Name`, `shop_product`.`Manufacturer`,
+ `shop_product`.`Description`, `shop_product`.`Price`, `shop_product`.`Number`, `shop_product`.`Category_id`, `shop_product`.`Image`, `shop_product`.`URL`,
+ `shop_product`.`AddedDate`, `shop_product`.`StocksDate` FROM `shop_product` WHERE (`shop_product`.`Name` LIKE %s AND `shop_product`.`Price` <= %s
+AND `shop_product`.`Category_id` IN %s AND `shop_product`.`Price` >= %s)""", ['%'+search+'%',max, category, min]))
 
     products_list = Paginator(products_list,20)   
     page = 1
@@ -93,7 +107,7 @@ def shop(request):
 
     if  products_list.num_pages != 1:
         page_list.append(products_list.num_pages)
-    content = render(request, 'productList.html', { 'categories_list': categories_list, 'products_list': products_list.page(page), 'page_list': page_list})
+    content = render(request, 'productList.html', {'min': min, 'max':max, 'search':search, 'categories_list': categories_list, 'products_list': products_list.page(page), 'page_list': page_list})
             
     return render(request,'index.html', {'error_list': error, 'content': content.content} )
 

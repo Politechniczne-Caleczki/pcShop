@@ -1,0 +1,116 @@
+CREATE TABLE `auth_user` (
+  `id` int(11)		NOT NULL AUTO_INCREMENT,
+  `password`		varchar(128) NOT NULL,
+  `last_login`		datetime(6) DEFAULT NULL,
+  `is_superuser`	tinyint(1) NOT NULL,
+  `username`		varchar(30) NOT NULL,
+  `first_name`		varchar(30) NOT NULL,
+  `last_name`		varchar(30) NOT NULL,
+  `email`			varchar(254) NOT NULL,
+  `is_staff`		tinyint(1) NOT NULL,
+  `is_active`		tinyint(1) NOT NULL,
+  `date_joined`		datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `shop_basket` (
+  `id`				int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `shop_completed` (
+  `shoppinglist_ptr_id` int(11) NOT NULL,
+  `Date`				datetime(6) NOT NULL,
+  `CompletedList_id`	int(11) NOT NULL,
+  PRIMARY KEY (`shoppinglist_ptr_id`),
+  KEY			`shop_complete_CompletedList_id_3672cbb2_fk_shop_completedlist_id` (`CompletedList_id`),
+  CONSTRAINT	`shop_comple_shoppinglist_ptr_id_bab2048b_fk_shop_shoppinglist_id` FOREIGN KEY (`shoppinglist_ptr_id`) REFERENCES `shop_shoppinglist` (`id`),
+  CONSTRAINT	`shop_complete_CompletedList_id_3672cbb2_fk_shop_completedlist_id` FOREIGN KEY (`CompletedList_id`) REFERENCES `shop_completedlist` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `shop_completedlist` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `shop_order` (
+  `id`				int(11) NOT NULL AUTO_INCREMENT,
+  `Number`			int(11) NOT NULL,
+  `Date`			datetime(6) NOT NULL,
+  `Container_id`	int(11) NOT NULL,
+  `Product_id`		int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY	`shop_order_5d1d5f89` (`Container_id`),
+  KEY	`shop_order_1a28406a` (`Product_id`),
+  CONSTRAINT `shop_order_Container_id_9143f1da_fk_shop_basket_id` FOREIGN KEY (`Container_id`) REFERENCES `shop_basket` (`id`),
+  CONSTRAINT `shop_order_Product_id_0ce06c26_fk_shop_product_id`  FOREIGN KEY (`Product_id`) REFERENCES `shop_product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `shop_product` (
+  `id`				int(11) NOT NULL AUTO_INCREMENT,
+  `Name`			varchar(64) NOT NULL,
+  `Manufacturer`	varchar(64) NOT NULL,
+  `Description`		longtext NOT NULL,
+  `Price`			double NOT NULL,
+  `Number`			int(11) NOT NULL,
+  `Image`			varchar(100) NOT NULL,
+  `URL`				varchar(200) DEFAULT NULL,
+  `AddedDate`		datetime(6) NOT NULL,
+  `StocksDate`		datetime(6) DEFAULT NULL,
+  `Category_id`		int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `shop_product_e9c8a574` (`Category_id`),
+  CONSTRAINT `shop_product_Category_id_96f647da_fk_shop_productcategory_id` FOREIGN KEY (`Category_id`) REFERENCES `shop_productcategory` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `shop_productcategory` (
+  `id`		int(11) NOT NULL AUTO_INCREMENT,
+  `Name`	varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `shop_shippinginformation` (
+  `id`			int(11) NOT NULL AUTO_INCREMENT,
+  `Name`		varchar(64) NOT NULL,
+  `Surname`		varchar(64) NOT NULL,
+  `Address`		varchar(128) NOT NULL,
+  `City`		varchar(64) NOT NULL,
+  `Country`		varchar(64) NOT NULL,
+  `UserAccounts_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY		 `shop_shippinginformation_6d0f72b7` (`UserAccounts_id`),
+  CONSTRAINT `shop_shippinginf_UserAccounts_id_d83200da_fk_shop_useraccount_id` FOREIGN KEY (`UserAccounts_id`) REFERENCES `shop_useraccount` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `shop_shoppinglist` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `shop_useraccount` (
+  `id`				 int(11) NOT NULL AUTO_INCREMENT,
+  `Basket_id`		 int(11) NOT NULL,
+  `CompletedList_id` int(11) NOT NULL,
+  `ShoppingList_id`  int(11) NOT NULL,
+  `User_id`			 int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Basket_id` (`Basket_id`),
+  UNIQUE KEY `CompletedList_id` (`CompletedList_id`),
+  UNIQUE KEY `ShoppingList_id` (`ShoppingList_id`),
+  UNIQUE KEY `User_id` (`User_id`),
+  CONSTRAINT `shop_useracco_CompletedList_id_d5e485b6_fk_shop_completedlist_id` FOREIGN KEY (`CompletedList_id`) REFERENCES `shop_completedlist` (`id`),
+  CONSTRAINT `shop_useraccoun_ShoppingList_id_4f10e87d_fk_shop_shoppinglist_id` FOREIGN KEY (`ShoppingList_id`) REFERENCES `shop_shoppinglist` (`id`),
+  CONSTRAINT `shop_useraccount_Basket_id_b3997a89_fk_shop_basket_id`			FOREIGN KEY (`Basket_id`) REFERENCES `shop_basket` (`id`),
+  CONSTRAINT `shop_useraccount_User_id_9bbc7ad4_fk_auth_user_id`				FOREIGN KEY (`User_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+
