@@ -1,14 +1,5 @@
 ﻿<div id="container">
-    
-                        <div >
-                <form method="post" action="">
-                    {% csrf_token %}
-                Szukaj:<input type="text" id='search1' name="search" value="{{ search}}" /> 
-                Min:<input type="number" min="0" id='_min1' name="min" value={{ min }} /> 
-                Max:<input type="number" min="0" id='_max1'  name="max" value={{ max }} />  
-                <input type="submit" value="Szukaj" />
-                 </form>   
-            </div>  
+
 
     <div class = "m10 p10 shadowbox" id="menu" >
         {% if categories_list %}                                        

@@ -13,6 +13,13 @@ text-align:center;
 
 }
 
+#searchbar{
+    position:fixed;
+    margin-left:20px;
+    display: inline-block;
+
+}
+
 #logo{
 
       display: inline-block;

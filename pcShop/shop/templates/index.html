@@ -29,6 +29,15 @@
             <div id="logo" align="left" class="ml10">
                <a href="/shop/"> <img src="/static/admin/img/Images/logo.png" height="40"/></a>
             </div>
+            <div id="searchbar">
+                <form method="post" action="/shop/">
+                    {% csrf_token %}
+                Szukaj:<input type="text" id='search1' style="margin-left:10px;" name="search" value="{{ search}}" /> 
+                Price: <input type="number" min="0" id='_min1' size="5"  name="min" {% if min != None %} value={{ min }}{% else %} value="0"{% endif %}  /> 
+                - <input type="number" min="0" id='_max1'  name="max" {% if max != None %} value={{ max }}{% else %} value="100000"{% endif %} />  
+                <input type="submit" value="Szukaj" />
+                 </form>   
+            </div>  
             <div id="cart" align="right" class="mr40 mt5">
                <a href="/shop/basket/"> <img src="/static/admin/img/Images/shopping-cart.png" height="30"/></a>
             </div>

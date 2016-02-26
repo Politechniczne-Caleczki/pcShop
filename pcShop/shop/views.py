@@ -107,9 +107,9 @@ AND `shop_product`.`Category_id` IN %s AND `shop_product`.`Price` >= %s)""", ['%
 
     if  products_list.num_pages != 1:
         page_list.append(products_list.num_pages)
-    content = render(request, 'productList.html', {'min': min, 'max':max, 'search':search, 'categories_list': categories_list, 'products_list': products_list.page(page), 'page_list': page_list})
+    content = render(request, 'productList.html', { 'categories_list': categories_list, 'products_list': products_list.page(page), 'page_list': page_list})
             
-    return render(request,'index.html', {'error_list': error, 'content': content.content} )
+    return render(request,'index.html', {'min': min, 'max':max, 'search':search,'error_list': error, 'content': content.content} )
 
 
 def product(request, product_id):
@@ -263,8 +263,8 @@ def completed(request):
 
     userAccount = UserAccount.objects.get(User = request.user)    
     completed_list = userAccount.CompletedList.completed_set.all()         
-
     content = render(request, 'completedList.html', {'completed_list': completed_list})
+
 
     return render(request,'index.html', {'content': content.content })
 
@@ -401,10 +401,10 @@ def getfile(request):
         data.append(('Product','Number','Date'))
         index = index+ 1
         table_tyle.append(('BACKGROUND',(0,index),(2,index),colors.azure))
-        data.append((o.Name, o.Number,o.Date.strftime("%d/%m/%Y %H:%M:%S")))       
+        data.append((o.Name[:15], o.Number,o.Date.strftime("%d/%m/%Y %H:%M:%S")))       
         index = index+ 1
         table_tyle.append(('TEXTCOLOR',(0,index),(0,index),colors.green))
-        table_tyle.append(('BACKGROUND',(0,index),(0,index),colors.beige))
+        table_tyle.append(('BACKGROUND',(0,index),(0,index),colors.azure))
         index = index+ 1
         table_tyle.append(('BACKGROUND',(0,index),(4,index),colors.azure))
         data.append(('Address:',))

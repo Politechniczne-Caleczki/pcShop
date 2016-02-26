@@ -16,8 +16,8 @@ class Product(models.Model):
     Name = models.CharField(max_length = 64, help_text = 'Name of the product.', default= '')
     Manufacturer = models.CharField(max_length = 64, help_text = 'Manufacturer of the product.', default = '')
     Description = models.TextField(help_text= 'Description of the product.', default = '')
-    Price = models.FloatField(default = 1, help_text= 'Price per item.')
-    Number = models.IntegerField(default = 0, help_text= 'In Stock')
+    Price = models.PositiveIntegerField(default = 1, help_text= 'Price per item.')
+    Number = models.PositiveIntegerField(default = 0, help_text= 'In Stock')
     Category = models.ForeignKey(ProductCategory)   
     Image = models.ImageField(upload_to='image/product/', default = 'image/product/default.jpg')
     URL = models.URLField(null = True, help_text='Address of the manufacturer.')
@@ -126,16 +126,15 @@ class UserAccount(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            _id = 1
-            if UserAccount.objects.count()>0:
-                _id = UserAccount.objects.latest('id').id+1 
-            self.Basket, _          = Basket.objects.get_or_create(id= _id)
-            self.ShoppingList, _    = ShoppingList.objects.get_or_create(id= _id)
-            self.CompletedList, _   = CompletedList.objects.get_or_create(id= _id)
-        else:
-            self.Basket, _          = Basket.objects.get_or_create(id= self.id)
-            self.ShoppingList, _    = ShoppingList.objects.get_or_create(id= self.id)
-            self.CompletedList, _   = CompletedList.objects.get_or_create(id= self.id)  
+            b = Basket()
+            b.save()
+            s = ShoppingList()
+            s.save()
+            c = CompletedList()
+            c.save()
+            self.Basket          = b
+            self.ShoppingList    = s
+            self.CompletedList   = c
 
         return super(UserAccount, self).save(*args, **kwargs)
 
